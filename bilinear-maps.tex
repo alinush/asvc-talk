@@ -1,0 +1,20 @@
+\begin{frame}
+\frametitle{Bilinear maps}
+
+%\textbf{Intuition:} Given $A = g^a, B = g^b$ and $X=g^{ab}$, a \textit{bilinear map} allows you to check if the  exponent of $X$ is the product of the exponents of $A$ and $B$.\pause
+%
+%\vspace{.5em}
+
+In some ``special'' groups $G$ with generator $g$ and $G_T$, can define:\pause%1
+$${\text{bilinear map}\ e(\cdot, \cdot) : G \times G \rightarrow G_T}$$\pause%2
+...such that $G_T$ has generator $e(g,g)$ and:\pause%3
+$$e(g^a, g^b) = e(g, g^b)^a = e(g^a,g)^b = e(g, g)^{ab}$$\pause%4
+We'll be using them to check that $ab = cd$ when given $(g^a, g^b, g^c, g^d)$:\pause%5
+\begin{align*}
+\onslide<6->{e(g^a, g^b) &\stackrel{?}{=} e(g^c, g^d)}
+\onslide<7->{\Leftrightarrow\\ e(g,g)^{ab} &\stackrel{?}{=} e(g, g)^{cd}}
+\onslide<8->{\Leftrightarrow\\ ab &\stackrel{?}{=} cd}
+\end{align*}
+\pause[9]
+...so, let's get back to verifying non-membership proofs.
+\end{frame}

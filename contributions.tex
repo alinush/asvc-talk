@@ -1,0 +1,41 @@
+\section{Contributions}
+
+\newcommand{\blgsb}{\ensuremath{b\lg^2{b}}}
+\newcommand{\nop}{\myred{$\times$}}
+\newcommand{\ns}{\ensuremath{\myred{n^2}}}
+\newcommand{\rn}{\ensuremath{\myred{n}}}
+
+\begin{frame}
+    \frametitle{Our Contribution: Aggregatable Subvector Commitments with Scalable Updates}
+
+    $n$ is the size of the vector.
+    $b$ is the size of a subvector.
+    All schemes can verify a proof $\pi_i$ in $O(|\pi_i|)$ time and update digests in $O(1)$ time.
+    \vspace{1em}
+
+    {
+    \small
+    \begin{tabular}{lccccccccccccc}
+        \toprule
+        {\makecell{(aS)VC scheme}}
+        & \makecell{$\vert\vrk\vert$}
+        & \makecell{$\vert \upk_i\vert$}
+        & \makecell{$\vert\pi_i\vert$} % updating proof typically takes O(|proof-size|) time, but some schemes don't support its
+        & \makecell{Proof\\update}
+        & \makecell{Verify\\subvector\\proof}
+        & \makecell{Aggregate}
+        & \makecell{Prove all}\\
+        \midrule
+        CF/LM~\cite{CF13,LM19}        & \rn & \rn  & 1    & 1     & $b$    & \nop & \ns \\
+        KZG~\cite{KZG10a}             & $b$ & \nop & \nop & \nop  & \blgsb & \nop & \ns \\
+        CDHK~\cite{CDHK15}            & \rn & \nop & \rn  & 1     & \blgsb & \nop & \ns \\
+        CPZ~\cite{CPZ18}              & \\
+        TCZ~\cite{TCZ+20,Tomescu20}   & \\
+        Pointproofs~\cite{GRWZ20}     & \\
+        \midrule
+        \textbf{Our aSVC}             & \\
+        \textbf{Our aSVC}$_{precomp}$ & \\
+        \bottomrule
+    \end{tabular}
+    }
+\end{frame}

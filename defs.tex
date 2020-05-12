@@ -1,0 +1,117 @@
+%
+% Styling
+%
+\newcommand{\api}{\hangindent=\parindent \hangafter=1 \noindent}
+%\def\bitcoin{%
+%    \leavevmode
+%    \vtop{\offinterlineskip %\bfseries
+%        \setbox0=\hbox{B}%
+%        \setbox2=\hbox to\wd0{\hfil\hskip-.03em
+%            \vrule height .3ex width .15ex\hskip .08em
+%            \vrule height .3ex width .15ex\hfil}
+%        \vbox{\copy2\box0}\box2}}
+%
+%\DeclareRobustCommand{\bitcoin}{{%
+%        \normalfont\sffamily
+%        \raisebox{-.25ex}{\makebox[.1\width][l]{-\kern-.3em-}}B%
+%}}
+
+%
+% Some nice colors:
+%  Blue: #268bd2
+%  (Grey) Blue: #657b83
+%  Green: #859900
+%  (Dark) Orange: #cb4b16
+%  Red: #dc322f
+%  Periwinkle: #6c71c4
+%  Pink: #d33682
+%  Teal: #2aa198
+%  Yellow: #b58900
+%
+\definecolor{myBlueColor}{HTML}{268BD2}
+\definecolor{myYellowColor}{HTML}{B58900}
+\definecolor{myGreenColor}{HTML}{859900}
+\definecolor{myRedColor}{HTML}{DC322F}
+\definecolor{myOrangeColor}{HTML}{CB4B16}
+\newcommand{\myblue}[1]{\textcolor{myBlueColor}{#1}}
+\newcommand{\myred}[1]{\textcolor{myRedColor}{#1}}
+\newcommand{\myyellow}[1]{\textcolor{myYellowColor}{#1}}
+\newcommand{\mygreen}[1]{\textcolor{myGreenColor}{#1}}
+\newcommand{\myorange}[1]{\textcolor{myOrangeColor}{#1}}
+
+%
+% Notes and TODOs
+%
+\newcommand{\todo}[1]{\noindent\textcolor{red}{\textbf{(}\textsc{\textbf{{TODO: }}}}#1\textcolor{red}{\textbf{)}}}
+\newcommand{\anote}[1]{\textcolor{blue}{[\textbf{Alin}: #1]}}
+
+%
+% Some mathy things
+%
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\newcommand{\dom}{{Domain}}
+\newcommand{\bezout}{B\'ezout\xspace}
+\newcommand{\Gr}{\mathbb{G}}
+\newcommand{\Gho}{\mathbb{G}_{?}}
+\newcommand{\Fp}{\mathbb{F}_p}
+\newcommand{\GT}{\mathbb{G}_T}
+\newcommand{\Zp}{\mathbb{Z}_p}
+\newcommand{\poly}{{poly}}
+\newcommand{\negl}{{negl}}
+\newcommand{\lagr}{\ensuremath{\mathcal{L}}}
+\newcommand{\Adv}{\ensuremath{\mathcal{A}}\xspace} % adversary
+
+%
+% Vector Commitment things
+%
+\newcommand{\vect}[1]{\ensuremath{\bm{\mathrm{#1}}}}
+
+\newcommand{\vcsetup}{\ensuremath{{VC}}.\ensuremath{{KeyGen}}\xspace}
+\newcommand{\vccommit}{\ensuremath{{VC}}.\ensuremath{{Commit}}\xspace}
+\newcommand{\vccommitempty}{\ensuremath{{VC}}.\ensuremath{{EmptyCommit}}\xspace}
+\newcommand{\vcopenpos}{\ensuremath{{VC}}.\ensuremath{{ProvePos}}\xspace}
+\newcommand{\vcverifypos}{\ensuremath{{VC}}.\ensuremath{{VerifyPos}}\xspace}
+\newcommand{\vcverifyaggpos}{\ensuremath{{VC}}.\ensuremath{{VerifyAggPos}}\xspace}
+\newcommand{\vcverifyupk}{\ensuremath{{VC}}.\ensuremath{{VerifyUPK}}\xspace}
+\newcommand{\vccommupdate}{\ensuremath{{VC}}.\ensuremath{{UpdateDig}}\xspace}
+\newcommand{\vcproofupdate}{\ensuremath{{VC}}.\ensuremath{{UpdateProof}}\xspace}
+
+\newcommand{\vcopenall}{\ensuremath{{VC}}.\ensuremath{{ProveAll}}\xspace}
+\newcommand{\vcaggregateproofs}{\ensuremath{{VC}}.\ensuremath{{AggregateProofs}}\xspace}
+
+\newcommand{\emptydigest}{d_\varnothing}
+\newcommand{\pp}{\ensuremath{{PP}}\xspace}
+\newcommand{\prk}{\ensuremath{{prk}}\xspace}
+\newcommand{\vrk}{\ensuremath{{\textcolor{mLightGreen}{vrk}}}\xspace}
+\newcommand{\upk}{\ensuremath{{\textcolor{mLightGreen}{upk}}}\xspace}
+
+\newcommand{\treepath}{\ensuremath{{treepath}}}
+
+%
+% \Sys things
+%
+\newcommand{\addr}{\ensuremath{{addr}}\xspace}
+\newcommand{\bal}{\ensuremath{{bal}}\xspace}
+\newcommand{\cnt}{\ensuremath{{cnt}}\xspace}
+\newcommand{\inittxn}{\texttt{\textbf{INIT}}\xspace}
+\newcommand{\initspendtxn}{\texttt{INITSPEND}\xspace}
+\newcommand{\minttxn}{\texttt{\textbf{MINT}}\xspace}
+\newcommand{\pk}{\ensuremath{\mathbf{{pk}}}\xspace}
+\newcommand{\PK}{\ensuremath{{PK}}\xspace}
+%\newcommand{\spendtxn}{\texttt{\textbf{SPEND}}\xspace}
+\newcommand{\txfer}{\texttt{\textbf{TXFER}}\xspace}
+\newcommand{\tpk}{\ensuremath{{tpk}}\xspace}
+\newcommand{\tsk}{\ensuremath{{tsk}}\xspace}
+\newcommand{\tx}{\ensuremath{{tx}}\xspace}
+
+
+\def\pdfslides#1#2#3#4#5#6{%
+    \foreach \index in {1, ..., #1} {%
+        \begin{frame}%
+            \frametitle{#4}%
+            {#5}
+            {\includegraphics[page=\index,#3]{#2}}%
+            {#6}
+        \end{frame}%
+}}

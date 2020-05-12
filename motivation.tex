@@ -1,0 +1,54 @@
+\section{Motivation}
+
+\begin{frame}
+    \frametitle{Stateless cryptocurrencies}
+
+    \textbf{Stateful} transaction validation:
+    \begin{align*}
+    \text{Check}\ \tx=[\txfer, \PK_i \rightarrow \PK_j, \$v]\ \text{against \alert{state} on disk}
+    \end{align*}
+
+    \begin{alertblock}{Observations}
+        \begin{itemize}
+        \item State is just a dictionary $D(\PK_i)\rightarrow \bal_i$ (+ counters for replay attacks)
+        \item ``Authenticate'' it and verify transaction against \textit{digest}
+        \item Each block $t$ now stores digest $d_t$ of the latest state
+        \end{itemize}
+    \end{alertblock}
+
+    \alert{Stateles} transaction validation:
+    \begin{equation*}
+    \text{Check}\ \tx=[\txfer, \PK_i \rightarrow \PK_j, \$v, \alert{t}, \alert{\pi_i}, \alert{\$\bal_i} \ge \$v]\ \text{against digest}\ d_t\ \text{in block}\ t
+    \end{equation*}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Stateless cryptocurrencies from Vector Commitments (VCs)}
+
+    An \textit{authenticated dictionary (AD)} would be ideal, but a \alert{vector commitment (VC)} works as well~\cite{CPZ18}:
+    \begin{itemize}
+        %\begin{itemize}
+        %\item Need to \alert{register} each user and map her \PK to a number $\in\{1,2,\dots, n\}$.
+        \item Position $i$ stores user $i$'s account details $(i,\bal_i,\PK_i,\upk_i)$, where $\upk_i$ is a \emph{user-specific} \alert{update key}
+    \end{itemize}
+
+    Three \textbf{key requirements}:
+    \begin{enumerate}
+        \item Need $\vcverifypos(\vrk, d_t, \bal_i, i, \pi_i)$ to \alert{validate} $[\txfer, \PK_i \rightarrow j, \$v, {t}, {\pi_i}, {\$\bal_i}]$
+        \begin{itemize}
+            %\item Also, $d_{t+1}=\vccommupdate(d_{t+1}, +v, j, \upk_j)$
+            \item \vrk is a global \alert{verification key}
+        \end{itemize}
+        \item Need $d_{t+1}=\vccommupdate(d_{t+1}, -v, i, \upk_i)$ to update digest with $i$'s new balance
+        \begin{itemize}
+            %\item Also, $d_{t+1}=\vccommupdate(d_{t+1}, +v, j, \upk_j)$
+            \item Repeat for $j$'s balance changing by $+v$.
+        \end{itemize}
+        \item Need $\pi_i' = \vcproofupdate(\pi_i, -v, i, \upk_i)$
+        \begin{itemize}
+            %\item Also, $\pi_j' = \vcproofupdate(\pi_j, +v, j, \upk_i, \upk_j)$
+            \item Also, need to update $j$'s proof $\pi_j$.
+        \end{itemize}
+        \item Let $I$ be the set of users sending coins in a block. Would like to aggregate all proofs $\pi_I = \vcaggregateproofs(I, (\pi_i)_{i\in I})$
+    \end{enumerate}
+\end{frame}

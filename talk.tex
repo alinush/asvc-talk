@@ -1,0 +1,112 @@
+%\documentclass[usenames,dvipsnames,handout,aspectratio=169,10pt]{beamer}
+\documentclass[usenames,dvipsnames,aspectratio=169,10pt]{beamer}
+
+\input{includes}
+
+% WARNING: Note, that you have to have Mozilla's \emph{Fira Sans} font and XeTeX installed to enjoy this wonderful typography.
+
+%\usetheme{Madrid}
+%
+% For Metropolis theme instructions, see:
+%  - Overleaf: https://www.overleaf.com/latex/templates/metropolis-beamer-theme/qzyvdhrntfmr
+%  - Manual: http://ctan.math.illinois.edu/macros/latex/contrib/beamer-contrib/themes/metropolis/doc/metropolistheme.pdf
+\usetheme[progressbar=frametitle]{metropolis}
+%\usecolortheme{default}
+\metroset{block=fill}  % draws boxes around \begin{block/alertblock/example}
+\setsansfont[BoldFont={Fira Sans SemiBold}]{Fira Sans Book}
+\setmathfont{Fira Math} % installed from https://github.com/firamath/firamath/releases/tag/v0.3.3
+
+%------------------------------------------------------------
+%This block of code defines the information to appear in the
+%Title page
+\title[Aggregatable Subvector Commitments for Stateless Cryptocurrencies] %optional
+{Aggregatable Subvector Commitments for Stateless Cryptocurrencies}
+%\subtitle{From Commitments to Lagrange Polynomials}
+
+\author[Tomescu, Abraham, Buterin, Drake, Feist, Khovratovich] % (optional)
+{
+   Alin Tomescu\inst{1} \and
+   Ittai Abraham\inst{1} \and
+   Vitalik Buterin\inst{2} \and
+   Justin Drake\inst{2} \and
+   Dankrad Feist\inst{2} \and
+   Dmitry Khovratovich\inst{2}
+}
+
+\institute
+{
+   \inst{1} VMware Research,
+   \inst{2} Ethereum Foundation
+}
+
+%\vspace{5em}
+%\date[May 13th, 2020] % (optional)
+%{zkStudyClub\\ \scriptsize{Wednesday, May 13th, 2020}}
+
+%\logo{\includegraphics[height=1.5cm]{lion-logo.png}}
+
+%End of title page configuration block
+%------------------------------------------------------------
+
+% Configure the footer line in beamer
+
+%\defbeamertemplate*{footline}{split theme}
+%{%
+%  \leavevmode%
+%  \hbox{\begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm plus1fill,rightskip=.3cm]{author in head/foot}%
+%    \usebeamerfont{author in head/foot}\insertshortauthor
+%  \end{beamercolorbox}%
+%  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+%    \usebeamerfont{title in head/foot}\insertshorttitle
+%  \end{beamercolorbox}}%
+%  \vskip0pt%
+%}
+
+
+%------------------------------------------------------------
+%The next block of commands puts the table of contents at the
+%beginning of each section and highlights the current section:
+
+%\AtBeginSection[]
+\AtBeginSubsection[]
+{
+  \begin{frame}
+    \frametitle{Outline}
+    \tableofcontents[
+    	%currentsection,
+    	%currentsubsection,
+ 	    sectionstyle=show/shaded,
+    	subsectionstyle=show/shaded/hide
+    	%subsectionstyle=show/show/hide
+    ]
+  \end{frame}
+}
+%------------------------------------------------------------
+
+\begin{document}
+%---------------------------------------------------------
+\frame{\titlepage}
+%---------------------------------------------------------
+%\begin{frame}
+%\frametitle{Table of Contents}
+%\tableofcontents
+%\end{frame}
+%---------------------------------------------------------
+\input{defs}
+\input{motivation}
+\input{contributions}
+\input{commitment}
+\input{conclusion}
+%---------------------------------------------------------
+\section{Appendix}
+%\begin{frame}
+%\frametitle{Appendix}
+%\end{frame}
+%---------------------------------------------------------
+\begin{frame}[allowframebreaks]
+    \frametitle{References}
+    \bibliographystyle{alpha}
+    \bibliography{references,references-extra}
+\end{frame}
+
+\end{document}

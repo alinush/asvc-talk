@@ -1,0 +1,16 @@
+\section{Polynomial commitments}
+
+\begin{frame}
+    \frametitle{Constant-sized polynomial commitments \cite{KZG10a}}
+
+    Fix $q$-SDH public parameters $\left(g^{\tau^i}\right)_{0\le i \le q}$ such that \textbf{trapdoor} $\tau$ is unknown.\pause\\
+    For any polynomial $\phi = \sum_{i=0}^n \phi_i X^i = \langle \phi_0, \phi_{1}, \dots, \phi_n \rangle$ of degree $n \le q$:\pause
+    \begin{align*}
+    \onslide<3->{c &= g^{\phi(\tau)}}\\
+    \onslide<4->{  &= \left(g^{\tau^n}\right)^{\phi_n} \left(g^{\tau^{n-1}}\right)^{\phi_{n-1}} \dots (g^\tau)^{\phi_1} \left(g\right)^{\phi_0} }\\
+    \onslide<5->{  &= g^{\phi_n \tau^n} g^{\phi_{n-1} \tau^{n-1}} \dots g^{\phi_1 \tau} g^{\phi_0}} \\
+    \onslide<6->{  &= g^{\phi_n \tau^n+ \phi_{n-1} \tau^{n-1} + \dots + \phi_1 \tau + \phi_0}} \\
+    \onslide<7->{  &= g^{\phi(\tau)}}
+    \end{align*}
+    \pause[8]
+\end{frame}
