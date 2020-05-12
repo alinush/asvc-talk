@@ -1,11 +1,47 @@
-\section{Conclusion}
-
 \begin{frame}
-    \frametitle{The end}
+    \frametitle{Summary}
 
-    \textbf{In conclusion:}
+    \small
+    \pause
+    \textbf{Main contributions:}\pause
     \begin{itemize}
-        \item So\pause
-        \item Then
+        \item New aSVC with constant-sized (subvector) proofs and constant-sized update keys\pause
+        \item Proofs can be aggregated efficiently into subvector proof\pause
+        \item Proofs can be updated efficiently\pause
+        \item Can be used to build highly-efficient, account-based stateless cryptocurrencies\pause
+    \end{itemize}
+
+    \textbf{Other goodies (not in this talk):}\pause
+    \begin{itemize}
+        \item aSVC formalization that accounts for update keys\pause
+        \item Each update key $\upk_i$ is verifiable against $\vrk$\pause
+        \item New security definition for KZG batch proofs, which reduces to $n$-SBDH\pause
+        \item Subtleties of VC-based stateless cryptocurrencies\pause
+        \item Aggregating multiple $I$-subvector proofs \textit{across different commitments}~\cite{GRWZ20}.
     \end{itemize}
 \end{frame}
+
+\begin{frame}
+    \frametitle{Roots of Unity Benefits}
+
+    Our scheme actually uses $\phi(\omega_i)=v_i$, where $\omega$ is a primitive $n$th \alert{root of unity}.\pause\xspace
+    This has several advantages:\pause
+
+    \begin{itemize}
+    \item Our public parameters can be \textit{efficiently} derived from ``powers-of-tau'' $g^{\tau^i}$'s:\pause
+    \begin{itemize}
+        \item $\ell_i$'s via an inverse FFT~\cite{Virza17}\pause
+        \item $a_i$'s via the Feist-Khovratovich (FK) technique~\cite{FK20}\pause
+        \item $u_i$'s via \mygreen{our new, FK-like, technique} (see \cite[Sec 3.4.5]{TAB+20})\pause
+    \end{itemize}
+    \item Since $g^{\tau^i}$'s are updatable, our public parameters are \textit{updatable}.\pause
+    \item Can precompute all $n$ proofs in $O(n\log{n})$ time via FK technique~\cite{FK20}.\pause
+    \item Can remove $A'(i)$ from $\upk_i$.
+    \end{itemize}
+\end{frame}
+
+{\setbeamercolor{palette primary}{fg=black, bg=yellow}
+    \begin{frame}[standout]
+        Questions?
+    \end{frame}
+}

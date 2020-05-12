@@ -1,0 +1,39 @@
+\subsection{Decomposition of $1/\left((X-i)(X-j)\right)$}
+\label{s:decompose-proof-update}
+\begin{frame}
+    \frametitle{Decomposition of $A(X)/\left((X-i)(X-j)\right)$}
+
+    Note that:
+    \begin{align}
+    \label{eq:decompose-proof-update}
+    \frac{1}{i-j}\cdot \frac{A(X)}{X-i} + \frac{1}{j-i}\cdot \frac{A(X)}{X-j}
+        &= \frac{1}{i-j}\cdot \frac{A(X)(X-j)}{(X-i)(X-j)} + \frac{1}{j-i}\cdot \frac{A(X)(X-i)}{(X-j)(X-i)}\\
+        &= \frac{\frac{1}{i-j}A(X)(X-j)-\frac{1}{i-j}A(X)(X-i)}{(X-i)(X-j)}\\
+        &= \frac{\frac{1}{i-j}A(X)[(X-j)-(X-i)]}{(X-i)(X-j)}\\
+        &= \frac{\frac{1}{i-j}A(X)(-j+i)}{(X-i)(X-j)}\\
+        &= \frac{A(X)}{(X-i)(X-j)}
+    \end{align}
+\end{frame}
+
+\subsection{Decomposition of $1/A_I(X)$}
+\begin{frame}
+    \label{s:partial-fraction-decomposition}
+    \frametitle{Partial Fraction Decomposition From Lagrange Interpolation}
+
+    \small
+    It is well-known that Lagrange coefficients can be \textit{rewritten} as~\cite{BT04,vG13ModernCh10}:
+    \begin{align}
+    \lagr_i(X)=\prod_{j\in I, j\ne i} \frac{X-j}{i - j}=\frac{A_I(X)}{A_I’(i) (X-i)},\ \text{where}\ A_I(X)=\prod_{i\in I} (X-i)
+    \end{align}
+
+    Here, $A_I'(X)$ is the derivative of $A_I(X)$ and has the (non-obvious) property that $A_I'(i)=\prod_{j\in I,j\ne i} (i-j)$.
+    \\
+    Next, consider the Lagrange interpolation of $\phi(X) = 1$:
+    \begin{align}
+    \phi(X) &= \sum_{i\in I} v_i \lagr_i(X)\Leftrightarrow\\
+    1 &= A_I(X)\sum_{i\in[0,n)} \frac{v_i}{A_I’(i)(X-i)}\Leftrightarrow\\
+    \frac{1}{A_I(X)} &= \sum_{i\in I} \frac{1}{A_I’(i)(X-i)}\Leftrightarrow\\
+    \frac{1}{A_I(X)} &= \sum_{i\in I} \frac{1}{A_I’(i)}\cdot\frac{1}{(X-i)}\Rightarrow\\
+    c_i &= \frac{1}{A_I’(i)}
+    \end{align}
+\end{frame}

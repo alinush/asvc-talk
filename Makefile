@@ -10,7 +10,7 @@ figs/%.pdf: figs/%.svg
 
 latexmk: latexmk_clean
 	# For some reason using -auxdir=build/ will result in failed builds
-	latexmk -pdf ${TEXNAME}
+	latexmk -xelatex ${TEXNAME}
 
 texi2pdf: texi2pdf_clean
 	texi2pdf --build-dir=build/ ${TEXNAME}.tex -o ${PDFNAME}.pdf

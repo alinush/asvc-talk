@@ -1,0 +1,93 @@
+\begin{frame}
+    \frametitle{Proof $\pi_i$ for $v_i$ Refresher}
+    \pause
+    A proof for $v_i$ is just a \alert{KZG evaluation proof}:\pause\\
+    \textbf{Step 1:} Interpolate $\phi(X)$ in $O(n\log^2{n})$ time.\pause\\
+    \textbf{Step 2:} Compute $q_i(X)=\frac{\phi(X)-v_i}{X-i}$ in $O(n)$ time.\pause\\
+    \textbf{Step 3:} Compute $\pi_i = g^{q_i(\tau)}$ using an $O(n)$-sized multiexp.\pause
+
+    To verify, use \alert{pairings} and $g^{\tau}$ from \vrk to check:\pause
+    \begin{align}
+    \onslide<7->{e(c / g^{v_i}, g) = e(\pi_i, g^{\tau} / g^i)\Leftrightarrow}\\
+    \onslide<8->{e(g^{\phi(\tau)}/g^{v_i}, g) = e(g^{q_i(\tau)},g^{\tau -i})\Leftrightarrow}\\
+    \onslide<9->{e(g^{\phi(\tau) - v_i}, g) = e(g,g)^{q_i(\tau)(\tau -i)}\Leftrightarrow}\\
+    \onslide<10->{\phi(\tau) - v_i = q_i(\tau)(\tau -i)}
+    \end{align}
+    \pause[11]
+    \mygreen{\textbf{New technique:}} $O(n)$ time w/o interpolating $\phi(X)$ via $\upk_i$'s (see ~\cite[Appendix D.7]{TAB+20}).
+\end{frame}
+
+\begin{frame}
+    \frametitle{\mygreen{New Technique:} Updating Proofs $\pi_i$ After a Change to $v_i$}
+    \pause
+    Consider new $q_i'(X)$ when $v_i$ changed to $v_i+\delta_i$:\pause
+    \begin{align}
+    \onslide<3->{q_i'(X) &=\frac{\phi'(X)-(v_i+\delta_i)}{X-i}}\\
+    \onslide<4->{    & =\frac{\left(\phi(X) + \delta_i\lagr_i(X)\right) - v_i -\delta_i}{X-i}}\\
+    \onslide<5->{    &=\frac{\phi(X) - v_i}{X-i}-\frac{\delta_i(\lagr_i(X)-1)}{X-i}}\\
+    \onslide<6->{    &= q_i(X) + \delta_i\left(\frac{\lagr_i(X)-1}{X-i}\right)}
+    \end{align}
+    \pause[7]
+    Let $u_i$ be a KZG commitment to $\frac{\lagr_i(X)-1}{X-i}$.\pause\xspace
+    Then, $\pi_i' = g^{q_i'(\tau)}$ can be computed as:\pause % \vcproofupdate(\pi_i, \delta_i, i, \upk_i)$ is:\pause
+    \begin{align}
+    \pi_i'=\pi_i \cdot \left(u_i\right)^{\delta_i}
+    \end{align}
+    \pause
+    \textbf{Job done:} Each $\upk_i$ must include $u_i$.\pause\xspace
+    \myred{Wait, what about computing all $u_i$'s?}\pause\xspace
+    Later.
+\end{frame}
+
+\begin{frame}
+    \frametitle{\mygreen{New Technique:} Updating Proofs $\pi_i$ After a Change to $v_j$, $j\ne i$}
+
+    \small
+    \pause
+    Consider new $q_i'(X)$ when $v_j$ changed to $v_j+\delta_j$:\pause
+    \begin{align}
+    \onslide<3->{q_i'(X) &=\frac{\phi'(X)-v_i}{X-i}}\\
+    \onslide<4->{    &=\frac{\left(\phi(X) + \delta_j\lagr_j(X)\right) - v_i}{X-i}}\\
+    \onslide<5->{    &=\frac{\phi(X) - v_i}{X-i}-\frac{\delta_j\lagr_j(X)}{X-i}}\\
+    \onslide<6->{    &= q_i(X) + \delta_j\left(\frac{\lagr_j(X)}{X-i}\right)}
+    \end{align}
+    \pause[7]
+    Let $u_{i,j}$ be a KZG commitment to $U_{i,j}(X)=\frac{\lagr_j(X)}{X-i}$.\pause\xspace
+    Then, $\pi_i' = g^{q_i'(\tau)}$ can be computed as:\pause%\vcproofupdate(\pi_i, \delta_j, j, \upk_j)$ is:\pause
+    \begin{align}
+    \pi_i'=\pi_i \cdot \left(u_{i,j}\right)^{\delta_j}
+    \end{align}
+    \pause
+    \myred{\textbf{Big problem:}} To update $\pi_i$ after a change to any $j$, need $\upk_j = \{u_{i,j},\forall i\ne j\}$\pause\xspace $\Rightarrow |\upk_j|=O(\rn)$.\pause\\
+    \mygreen{\textbf{New technique:}} Compute $u_{i,j}$ in $O(1)$ time from $\upk_i$ and $\upk_j$.
+\end{frame}
+
+\begin{frame}
+    \frametitle{\mygreen{New Technique:} Compute $u_{i,j}$ in $O(1)$ time}
+
+    \footnotesize
+    \pause
+    Let $A(X)=\prod_{i\in[0,n)} (X-i)$.\pause\xspace
+    Then, $\lagr_j(X) = \frac{A(X)}{A'(j)(X-j)}$ (see \cref{s:partial-fraction-decomposition}),\pause\xspace
+    and:\pause
+    \begin{align}
+    \onslide<5->{U_{i,j}(X) = {\lagr_j(X)}/({X-i}) &= \left(\frac{A(X)}{A'(j)(X-j)}\right)/(X-i)}\\
+    \onslide<6->{    &= \frac{1}{A'(j)}\cdot \frac{A(X)}{(X-j)(X-i)}}\\
+    \onslide<7->{    &= \frac{1}{A'(j)}\cdot W_{i,j}(X)}
+    \end{align}
+    \pause[8]
+    Fortunately, it happens that (see \cref{s:decompose-proof-update}):\pause
+    \begin{align}
+    %\frac{1}{i-j}\cdot W_i(X) + \frac{1}{j-i}\cdot W_j(X)
+    \frac{1}{i-j}\cdot \frac{A(X)}{X-i} + \frac{1}{j-i}\cdot \frac{A(X)}{X-j} &= \frac{A(X)}{(X-i)(X-j)} = W_{i,j}(X)
+    \end{align}
+    \pause
+    \mygreen{\textbf{New technique:}} Let $a_i=g^{A(\tau)/(\tau - i)}$ and compute $u_{i,j}$ as:\pause
+    \begin{align}
+    u_{i,j}=\left(a_i^\frac{1}{i-j} \cdot a_j^\frac{1}{j-i}\right)^\frac{1}{A'(j)}
+    \end{align}
+    \pause
+    \textbf{Job done:} Each $\upk_i$ must include $a_i$ and $A'(i)$.\pause\xspace
+    \myred{Wait, what about computing all $a_i$'s?}\pause\xspace
+    Later.
+\end{frame}

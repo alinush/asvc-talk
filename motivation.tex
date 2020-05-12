@@ -1,54 +1,71 @@
-\section{Motivation}
-
 \begin{frame}
-    \frametitle{Stateless cryptocurrencies}
+    \frametitle{Stateless Cryptocurrencies}
 
-    \textbf{Stateful} transaction validation:
+    \small
+    \pause
+    \textbf{Stateful} transaction validation (for account-based cryptocurrencies)\pause:
     \begin{align*}
-    \text{Check}\ \tx=[\txfer, \PK_i \rightarrow \PK_j, \$v]\ \text{against \alert{state} on disk}
+    \text{Check}\ \tx=[\txfer, \PK_i \rightarrow \PK_j, v]\ \text{against \alert{state} on disk}
     \end{align*}
-
+    \pause
     \begin{alertblock}{Observations}
+        \pause
         \begin{itemize}
-        \item State is just a dictionary $D(\PK_i)\rightarrow \bal_i$ (+ counters for replay attacks)
-        \item ``Authenticate'' it and verify transaction against \textit{digest}
-        \item Each block $t$ now stores digest $d_t$ of the latest state
+        \item State is just a dictionary $D(\PK_i)\rightarrow \bal_i$ (+ counters for replay attacks)\pause
+        \item Could ``authenticate'' it and verify transaction against \textit{digest}~\cite{Miller12,Todd16,Buterin17,RMCI17}\pause
+        \item Each block $t$ now stores digest $d_t$ of the latest state\pause
         \end{itemize}
     \end{alertblock}
 
-    \alert{Stateles} transaction validation:
+    \alert{Stateles} transaction validation\pause:
     \begin{equation*}
-    \text{Check}\ \tx=[\txfer, \PK_i \rightarrow \PK_j, \$v, \alert{t}, \alert{\pi_i}, \alert{\$\bal_i} \ge \$v]\ \text{against digest}\ d_t\ \text{in block}\ t
+    \text{Check}\ \tx=[\txfer, \PK_i \rightarrow \PK_j, v, \alert{t}, \alert{\pi_i}, \alert{\bal_i} \ge v]\ \text{against digest}\ d_t\ \text{in block}\ t
     \end{equation*}
+    \pause
+    \begin{exampleblock}{Why go stateless?}
+        \pause
+        (1) Faster validation.\pause\xspace
+        (2) Less storage $\Rightarrow$ lower barrier to entry.\pause\xspace
+        (3) Easy sharding.
+    \end{exampleblock}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Stateless cryptocurrencies from Vector Commitments (VCs)}
+    \frametitle{Stateless Cryptocurrencies from Vector Commitments (VCs)}
 
-    An \textit{authenticated dictionary (AD)} would be ideal, but a \alert{vector commitment (VC)} works as well~\cite{CPZ18}:
+    \small
+    \pause
+    An \textit{authenticated dictionary (AD)} is ideal, but...\pause\xspace
+    a \alert{vector commitment (VC)} is sufficient~\cite{CPZ18}.\pause\xspace
     \begin{itemize}
         %\begin{itemize}
         %\item Need to \alert{register} each user and map her \PK to a number $\in\{1,2,\dots, n\}$.
-        \item Position $i$ stores user $i$'s account details $(i,\bal_i,\PK_i,\upk_i)$, where $\upk_i$ is a \emph{user-specific} \alert{update key}
+        \item $\alert{v_i} = (H(\PK_i)|\bal_i)$ stores user $i$'s \textit{address} and \textit{balance}\pause
+        \item $PK_i = (i,\tpk_i, \upk_i)$ and $\upk_i$ is a \textit{user-specific} \alert{update key}, which should be small\pause
     \end{itemize}
 
-    Three \textbf{key requirements}:
+    Consider miners \alert{validating} and \alert{including} $\tx = [\txfer, \PK_i \rightarrow \PK_j, v, {t}, {\pi_i}, {\bal_i}]$ \pause\xspace and users \alert{processing} it.\pause
     \begin{enumerate}
-        \item Need $\vcverifypos(\vrk, d_t, \bal_i, i, \pi_i)$ to \alert{validate} $[\txfer, \PK_i \rightarrow j, \$v, {t}, {\pi_i}, {\$\bal_i}]$
+        \item Miners need $\vcverifypos(\vrk, d_t, (H(\PK_i)|\bal_i), i, \pi_i)$\pause
         \begin{itemize}
             %\item Also, $d_{t+1}=\vccommupdate(d_{t+1}, +v, j, \upk_j)$
-            \item \vrk is a global \alert{verification key}
+            \item \vrk is a global \alert{verification key}, which should be small\pause
         \end{itemize}
-        \item Need $d_{t+1}=\vccommupdate(d_{t+1}, -v, i, \upk_i)$ to update digest with $i$'s new balance
+        \item Miners need $d_{t+1}=\vccommupdate(d_{t+1}, \delta_i, i, \upk_i)$\pause % to update digest with $i$'s new balance
         \begin{itemize}
             %\item Also, $d_{t+1}=\vccommupdate(d_{t+1}, +v, j, \upk_j)$
-            \item Repeat for $j$'s balance changing by $+v$.
+            \item i.e., update digest with change in balance $\delta_i$ for each user $i$\pause
         \end{itemize}
-        \item Need $\pi_i' = \vcproofupdate(\pi_i, -v, i, \upk_i)$
+        \item Users need $\alert{\pi_i'} = \vcproofupdate(\pi_i, \delta_j, j, \upk_j)$\pause
         \begin{itemize}
+            \item i.e., update $i$'s proof with change in balance $\delta_j$ for each user $j$\pause
             %\item Also, $\pi_j' = \vcproofupdate(\pi_j, +v, j, \upk_i, \upk_j)$
-            \item Also, need to update $j$'s proof $\pi_j$.
+            %\item Also, need to update $j$'s proof $\pi_j$.
         \end{itemize}
-        \item Let $I$ be the set of users sending coins in a block. Would like to aggregate all proofs $\pi_I = \vcaggregateproofs(I, (\pi_i)_{i\in I})$
+        \item Miners want $\alert{\pi_I} = \vcaggregateproofs(I, (\pi_i)_{i\in I})$, where $I=$ set of users sending coins in a block\pause
+        \begin{itemize}
+            \item Would need corresponding $\vcverifypos(\vrk, d_t, \left(H(\PK_i)|\bal_i\right)_{i\in I}, I, \pi_I)$\pause
+        \end{itemize}
+        \item \alert{Proof serving nodes} would like to compute all $\pi_i$'s fast
     \end{enumerate}
 \end{frame}
