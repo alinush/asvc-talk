@@ -17,12 +17,12 @@
     Can compute $q_I(X)$ in $O(n\log{n})$ field operations.\pause
     \end{alertblock}
     $I$-subvector proof is $\pi_I = g^{q_I(\tau)}$, computed with $O(n-|I|)$-sized multiexp.\pause\xspace
-    Can be verified as:\pause
+    To verify:\pause
     \begin{align}
     e(c/g^{R_I(\tau)}, g) = e(\pi_I, g^{A_I(\tau)})
     \end{align}
     \pause
-    \textit{Note:} \vrk contains $(g^{\tau^i})_{i\in[0,|I|]}$, which are needed for verifier to commit to $A_I(X)$ and $R_I(X)$.
+    \textit{Note:} \vrk contains $(g^{\tau^i})_{i\in[0,|I|]}$ %, which are needed for verifier to commit to $A_I(X)$ and $R_I(X)$.
 \end{frame}
 
 \begin{frame}

@@ -12,7 +12,7 @@
     \onslide<8->{  &= g^{\phi(\tau)}}
     \end{align}
     \pause[9]
-    Can \alert{interpolate} polynomial from $n$ points $(x_i, \phi(x_i))_{i\in[n]}$ is $O(n\log^2{n})$ field operations.\pause\xspace
+    Can \alert{interpolate} polynomial from $n$ points $(x_i, \phi(x_i))_{i\in[n]}$ in $O(n\log^2{n})$ field operations.\pause\xspace
     %($O(n\log{n})$ if the $x_i$'s are \alert{roots of unity} $\{\omega^0, \omega^1,\dots,\omega^{n-1}\})$.\pause\xspace
     Time to commit is an $O(n)$-sized multi-exponentiation.
 \end{frame}
@@ -39,7 +39,7 @@
     \frametitle{Updating the Digest}
 
     \pause
-    Let $\phi'(X)$ be the updated polynomial after a change $\delta_i$ to $v_i$:\pause
+    Let $\phi'(X)$ be the updated polynomial after $v_i$ changes to $v_i+\delta_i$:\pause
     \begin{align}
     \phi'(X) &= \phi(X) + \delta_i \lagr_i(X)
     \end{align}
