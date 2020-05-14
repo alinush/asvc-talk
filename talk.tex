@@ -54,10 +54,12 @@
 % To better align author names using a \begin{tabular}{ccc}
 \makeatletter
 \long\def\beamer@author[#1]#2{%
-    \def\insertauthor{\def\inst{\beamer@insttitle}\def\and{\beamer@andtitle}%
+    \def\insertauthor{%
+        \def\inst{\beamer@insttitle}\def\and{\beamer@andtitle}%
         \setlength{\tabcolsep}{2em}% space between columns
         \renewcommand{\arraystretch}{2.5} % general space between rows (1 standard)
-        \begin{tabular}{ccc}#2\end{tabular}}%
+        \begin{tabular}{ccc}#2\end{tabular}
+    }%
     \def\beamer@shortauthor{#1}%
     \ifbeamer@autopdfinfo%
     \def\beamer@andstripped{}%
@@ -82,6 +84,17 @@
    \inst{2} Ethereum Foundation
 }
 
+\makeatletter
+\def\date{\@dblarg\beamer@date}
+\long\def\beamer@date[#1]#2{%
+    \def\insertdate{#2%
+        \\
+        \vspace{1em}
+        {\scriptsize \textit{While you're at it, feel free to read our \href{https://alinush.github.io/2020/05/06/aggregatable-subvector-commitments-for-stateless-cryptocurrencies.html}{\textcolor{TolDarkBlue}{blogpost}} too.}}%
+    }%
+    \def\beamer@shortdate{#1}%
+}
+\makeatother
 \date{\centering May 13th, 2020}
 
 %\vspace{5em}
