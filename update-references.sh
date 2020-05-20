@@ -1,1 +1,0 @@
-ck genbib references.bib

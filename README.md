@@ -1,5 +1,6 @@
-# aSVC talk for zkStudyClub
+# aSVC talk
 
-You need `xelatex` and Fira fonts installed, which you can find in the `fira-fonts/` directory.
+Go to the different branches for different versions of the talk: 
 
-The compiled PDF is available [here](/talk.pdf).
+ - zkStudyClub (1 hour)
+ - 25mins
