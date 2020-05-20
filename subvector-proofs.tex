@@ -10,13 +10,13 @@
     \onslide<5->{q_I(X) &= \frac{\phi(X)-R_I(X)}{A_I(X)}}
     \end{align}
     \pause[6]
-    \begin{alertblock}{Note that}
-    \pause
-    $A_I(i)=0$ and $R_I(i) = v_i$, $\forall i\in I$.\pause\\
-    Can compute $A_I(X)$ and $R_I(X)$ in $O(|I|\log^2{|I|})$ field operations.\pause\\
-    Can compute $q_I(X)$ in $O(n\log{n})$ field operations.\pause
-    \end{alertblock}
-    $I$-subvector proof is $\pi_I = g^{q_I(\tau)}$, computed with $O(n-|I|)$-sized multiexp.\pause\xspace
+%    \begin{alertblock}{Note that}
+%    \pause
+%    $A_I(i)=0$ and $R_I(i) = v_i$, $\forall i\in I$.\pause\\
+%    Can compute $A_I(X)$ and $R_I(X)$ in $O(|I|\log^2{|I|})$ field operations.\pause\\
+%    Can compute $q_I(X)$ in $O(n\log{n})$ field operations.\pause
+%    \end{alertblock}
+    $I$-subvector proof is $\pi_I = g^{q_I(\tau)}$.\pause\xspace
     To verify:\pause
     \begin{align}
     e(c/g^{R_I(\tau)}, g) = e(\pi_I, g^{A_I(\tau)})
@@ -41,25 +41,9 @@
     \onslide<6->{    &= \phi(X)\frac{1}{A_I(X)}- \left(\sum_{i\in I} v_i\cdot \lagr_i^*(X)\right)\frac{1}{A_I(X)}}\\
     \onslide<7->{    &= \phi(X)\sum_{i\in I} \frac{1}{A_I’(i)(X-i)} - \left(\sum_{i\in I} v_i\cdot \frac{A_I(X)}{A_I’(i)(X-i)}\right)\cdot \frac{1}{A_I(X)}} \\
     \onslide<8->{    &= \sum_{i\in I} \frac{\phi(X)}{A_I’(i)(X-i)} - \sum_{i\in I} \frac{v_i}{A_I’(i)(X-i)}}\\
-    \onslide<9->{    &= \sum_{i\in I} \frac{1}{A_I’(i)}\cdot \frac{\phi(X) - v_i}{X-i}}\\
-    \onslide<10->{   &= \sum_{i\in I} \frac{1}{A_I’(i)}\cdot q_i(X)}
+    \onslide<9->{    &= \sum_{i\in I} \frac{1}{A_I’(i)}\cdot \frac{\phi(X) - v_i}{X-i}}
+    \onslide<10->{   = \sum_{i\in I} \frac{1}{A_I’(i)}\cdot q_i(X)}
     \end{align}
-\end{frame}
-
-
-\begin{frame}
-    \frametitle{Aggregating $I$-subvector Proof $\pi_I$ From $(\pi_i)_{i\in I}$ (Continued)}
-
-    \pause
-    To aggregate $\pi_I$:\pause
-
-    \textbf{Step 1:} Interpolate $A_I(X)=\prod_{i\in I} (X-i)$ in $O(|I|\log^2{|I|})$ field operations.\pause\\
-    \textbf{Step 2:} Compute its derivative $A_I'(X)$ in $O(|I|)$ field operations.\pause\\
-    \textbf{Step 3:} Compute all $A_I'(i)$ in $O(|I|\log^2{|I|})$ field operations via a \textit{polynomial multipoint evaluation}~\cite{vG13ModernCh10}.\pause\\
-    \textbf{Step 4:} Compute $\pi_I$ using an $O(|I|)$-sized multiexp:\pause
-    \begin{align}
-    \pi_I = \prod_{i\in I} \pi_i^{1/A_I'(i)}
-    \end{align}
-    \pause
-    \textbf{Job done:} Can aggregate $\pi_i$'s for $(v_i)_{i\in I}$ into constant-sized $\pi_I$.
+    \pause[11]
+    \textbf{Job done:} Can aggregate $\pi_i$'s for $(v_i)_{i\in I}$ into constant-sized $\pi_I=\prod_{i\in I} \pi_i^{1/A_I'(i)}$.
 \end{frame}

@@ -7,11 +7,11 @@
     \begin{align}
     \onslide<4->{c &= g^{\phi(\tau)}}\\
     \onslide<5->{  &= \left(g^{\tau^n}\right)^{\phi_n} \left(g^{\tau^{n-1}}\right)^{\phi_{n-1}} \dots (g^\tau)^{\phi_1} \left(g\right)^{\phi_0} }\\
-    \onslide<6->{  &= g^{\phi_n \tau^n} g^{\phi_{n-1} \tau^{n-1}} \dots g^{\phi_1 \tau} g^{\phi_0}} \\
-    \onslide<7->{  &= g^{\phi_n \tau^n+ \phi_{n-1} \tau^{n-1} + \dots + \phi_1 \tau + \phi_0}} \\
-    \onslide<8->{  &= g^{\phi(\tau)}}
+    %\onslide<6->{  &= g^{\phi_n \tau^n} g^{\phi_{n-1} \tau^{n-1}} \dots g^{\phi_1 \tau} g^{\phi_0}} \\
+    %\onslide<7->{  &= g^{\phi_n \tau^n+ \phi_{n-1} \tau^{n-1} + \dots + \phi_1 \tau + \phi_0}} \\
+    %\onslide<8->{  &= g^{\phi(\tau)}}
     \end{align}
-    \pause[9]
+    \pause[6]
     Can \alert{interpolate} polynomial from $n$ points $(x_i, \phi(x_i))_{i\in[n]}$ in $O(n\log^2{n})$ field operations.\pause\xspace
     %($O(n\log{n})$ if the $x_i$'s are \alert{roots of unity} $\{\omega^0, \omega^1,\dots,\omega^{n-1}\})$.\pause\xspace
     Time to commit is an $O(n)$-sized multi-exponentiation.
