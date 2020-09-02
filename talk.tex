@@ -67,6 +67,7 @@
     {\let\inst=\@gobble\let\thanks=\@gobble\def\and{, }\hypersetup{pdfauthor={\beamer@andstripped}}}
     \fi%
 }
+
 \makeatother
 \author[Tomescu, Abraham, Buterin, Drake, Feist, Khovratovich]{
     \makecell{\textbf{Alin Tomescu}\inst{1}\\\href{https://twitter.com/alinush407}{\textcolor{TolDarkBlue}{@alinush407}}} &
@@ -84,22 +85,18 @@
    \inst{2} Ethereum Foundation
 }
 
-\makeatletter
-\def\date{\@dblarg\beamer@date}
-\long\def\beamer@date[#1]#2{%
-    \def\insertdate{#2%
-        \\
-        \vspace{1em}
-        {\scriptsize \textit{While you're at it, feel free to read our \href{https://alinush.github.io/2020/05/06/aggregatable-subvector-commitments-for-stateless-cryptocurrencies.html}{\textcolor{TolDarkBlue}{blogpost}} too.}}%
-    }%
-    \def\beamer@shortdate{#1}%
-}
-\makeatother
-\date{\centering May 20th, 2020}
-
-%\vspace{5em}
-%\date[May 13th, 2020] % (optional)
-%{zkStudyClub\\ \scriptsize{Wednesday, May 13th, 2020}}
+%\makeatletter
+%\def\date{\@dblarg\beamer@date}
+%\long\def\beamer@date[#1]#2{%
+%    \def\insertdate{#2%
+%        \\
+%        \vspace{1em}
+%        {\scriptsize \textit{While you're at it, feel free to read our blogpost too: \href{https://alinush.github.io/2020/05/06/aggregatable-subvector-commitments-for-stateless-cryptocurrencies.html}{\textcolor{TolDarkBlue}{https://alinush.github.io/2020/05/06/aggregatable-subvector-commitments-for-stateless-cryptocurrencies.html}}}}%
+%    }%
+%    \def\beamer@shortdate{#1}%
+%}
+%\makeatother
+\date{\centering September 14th, 2020}
 
 %\logo{\includegraphics[height=1.5cm]{lion-logo.png}}
 
@@ -151,14 +148,14 @@
 %\end{frame}
 %---------------------------------------------------------
 \input{defs}
-\section{Motivation}
+%\section{Motivation}
 \input{motivation}
-\section{Contributions}
+%\section{Contributions}
 \input{contributions}
-\section{Techniques: VCs from Univariate Polynomial Commitments}
-\subsection{Committing to Vectors (and Updating Digests)}
+\section{Background}
 \input{commitment}
-\subsection{Computing and Updating Proofs}
+\section{Our Techniques}
+\subsection{Updating Proofs}
 \input{proofs}
 \subsection{Aggregating Proofs into Subvector Proofs}
 \input{subvector-proofs}

@@ -2,54 +2,83 @@
     \frametitle{KZG Constant-sized Polynomial Commitments \cite{KZG10a}}
 
     \pause
-    Fix $n$-SDH public parameters $\left(g^{\tau^i}\right)_{0\le i \le n}$ such that \alert{trapdoor} $\tau$ is unknown.\pause\\
-    For any polynomial $\phi = \sum_{i=0}^n \phi_i X^i = \langle \phi_0, \phi_{1}, \dots, \phi_n \rangle$ of degree $\le n$:\pause
+    Fix $n$-SDH \alert{public parameters} $\left(g^{\tau^i}\right)_{0\le i \le n}$ such that \alert{trapdoor} $\tau\in \Fp$ is unknown.\pause
+
+    \textbf{Committing:} Given $\phi\in \Fp[X]$\pause, where $\phi(X) = \sum_{i=0}^n \phi_i X^i = \langle \phi_0, \phi_{1}, \dots, \phi_n \rangle$\pause\xspace of degree $\le n$:\pause
     \begin{align}
-    \onslide<4->{c &= g^{\phi(\tau)}}\\
-    \onslide<5->{  &= \left(g^{\tau^n}\right)^{\phi_n} \left(g^{\tau^{n-1}}\right)^{\phi_{n-1}} \dots (g^\tau)^{\phi_1} \left(g\right)^{\phi_0} }
-    %\onslide<6->{  &= g^{\phi_n \tau^n} g^{\phi_{n-1} \tau^{n-1}} \dots g^{\phi_1 \tau} g^{\phi_0}} \\
-    %\onslide<7->{  &= g^{\phi_n \tau^n+ \phi_{n-1} \tau^{n-1} + \dots + \phi_1 \tau + \phi_0}} \\
-    %\onslide<8->{  &= g^{\phi(\tau)}}
+    \onslide<6->{\cm{\phi} &= g^{\phi(\tau)}}\\
+    \onslide<7->{  &= \left(g^{\tau^n}\right)^{\phi_n} \left(g^{\tau^{n-1}}\right)^{\phi_{n-1}} \dots (g^\tau)^{\phi_1} \left(g\right)^{\phi_0} }
     \end{align}
-    \pause[6]
-    Can \alert{interpolate} polynomial from $n$ points $(x_i, \phi(x_i))_{i\in[n]}$ in $O(n\log^2{n})$ field operations.\pause\xspace
-    %($O(n\log{n})$ if the $x_i$'s are \alert{roots of unity} $\{\omega^0, \omega^1,\dots,\omega^{n-1}\})$.\pause\xspace
-    Time to commit is an $O(n)$-sized multi-exponentiation.
+    \pause[8]
+
+    \textbf{\underline{Homomorphism:}} For all field elements $a,b$ and polynomials $\phi(X),\psi(X)$, we have:\pause
+    \begin{align}
+        \onslide<9->{\cm{a\cdot\phi + b\cdot \psi} &= g^{a\cdot\phi(\tau) + b\cdot \psi(\tau)}}\\
+        \onslide<10->{       &= \left(g^{\phi(\tau)}\right)^a \left(g^{\psi(\tau)}\right)^b}\\
+        \onslide<11->{       &= \cm{\phi}^a \cm{\psi}^b}
+    \end{align}
 \end{frame}
 
 % Lagrange interpolation and VCs from Lagrange basis polynomials
 %  + Commitment updates
 \begin{frame}
-    \frametitle{VCs from Lagrange Basis Polynomials~\cite{CDHK15}}
+    \frametitle{VCs from \mygreen{Lagrange Basis Polynomials}~\cite{CDHK15}}
     \pause
-    Compute $\phi(X)$ s.t. $\phi(i)=v_i$:\pause\xspace
+    Represent vector $\vec{v}$ with a polynomial $\phi$ s.t. $\phi(i)=v_i$:\pause\xspace
     \begin{align}
-    \phi(X)=\sum_{i=0}^{n-1} v_i \cdot \lagr_i(X),\ \text{where}\ \lagr_i(X) = \prod_{\substack{j\in [0,n)\\j\ne i}}\frac{X-j}{i-j}
+    \label{eq:lagr-interp}
+    \onslide<3->{\phi(X)&=\sum_{i=0}^{n-1} v_i \cdot \lagr_i(X)}\\
+    \onslide<4->{\lagr_i(X)&= \prod_{\substack{j\in [0,n)\\j\ne i}}\frac{X-j}{i-j}}
+    \end{align}
+    \pause[5]
+    Applying the KZG homomorphism to \cref{eq:lagr-interp}:\pause
+    \begin{align}
+        \cm{\phi} &= \prod_{i=0}^{n-1} \cm{\lagr_i}^{v_i}
     \end{align}
     \pause
-    Setup Lagrange basis polynomial commitments $\ell_i=g^{\lagr_i(\tau)},\forall i\in[0,n)$ (\myred{speed?})\pause. Then, commit to $\vect{v}$ as~\cite{CDHK15}:\pause\xspace
-    \begin{align}
-    \onslide<6->{c &= \prod_{i\in[0,n)} \ell_i^{v_i}}\\
-    \onslide<7->{  &= g^{\sum_{i\in[0,n)} \lagr_i(\tau) v_i}}\\
-    \onslide<8->{  &= g^{\phi(\tau)}}
-    \end{align}
+    \textbf{Note:} Public parameters include commitments $\cm{\lagr_i}$.\pause\xspace \textit{Can derive from $g^{\tau^i}$'s.}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Updating the Digest}
-
+    \frametitle{Updating the Digest = Updating Polynomial \& Updating Commitment}
     \pause
-    Let $\phi'(X)$ be the updated polynomial after $v_i$ changes to $v_i+\delta_i$:\pause
+    Assume $v_i$ changed to $v_i+\delta_i$.\pause\xspace
+    Old polynomial was:
+    \begin{align}
+    \phi(X)=\sum_{i=0}^{n-1} v_i \cdot \lagr_i(X)
+    \end{align}
+    \pause
+    Updated polynomial will be:
     \begin{align}
     \phi'(X) &= \phi(X) + \delta_i \lagr_i(X)
     \end{align}
     \pause
-    To update $c$ via $\vccommupdate(c, \delta_i, i, \upk_i)$:\pause
+    Updated commitment will be:
     \begin{align}
-    \onslide<5->{c' &= c \cdot \ell_i^{\delta_i}}\\
-    \onslide<6->{   &= g^{\phi(\tau)} \cdot g^{\delta_i \lagr_i(\tau)}}\\
-    \onslide<7->{   &= g^{\phi'(\tau)}}
+    \onslide<5->{\cm{\phi'} &= \cm{\phi} \cdot \cm{\lagr_i}^{\delta_i}}%\\
+    %\onslide<6->{   &= g^{\phi(\tau)} \cdot g^{\delta_i \lagr_i(\tau)}}\\
+    %\onslide<7->{   &= g^{\phi(\tau) + \delta_i \lagr_i(\tau)} = g^{\phi'(\tau)}}
     \end{align}
-    \pause[8]
-    \textbf{Jon done:} Each $\upk_i$ must include $\ell_i$.
+    \pause[6]
+    \textbf{Thus,} for our purposes, each $\upk_i$ will include $\cm{\lagr_i}$.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Proof $\pi_i$ for $v_i$ Refresher}
+    \pause
+    A proof $\pi_i$ for $v_i$ must convince that $\phi(i) = v_i$\pause\xspace$\Leftrightarrow \phi \bmod (X-i) = v_i$.\pause
+    \begin{align}
+        \onslide<4->{q_i(X) &= \frac{\phi(X)-v_i}{X-i}}\\
+        \onslide<5->{\pi_i &= \cm{q_i} = g^{q_i(\tau)}}
+    \end{align}
+    \pause[6]
+    To verify, use \alert{pairings}:\pause
+    \begin{align}
+    \onslide<7->{e(\cm{\phi} / g^{v_i}, g) &= e(\pi_i, g^{\tau} / g^i)\Leftrightarrow}\\
+    %\onslide<8->{e(g^{\phi(\tau)}/g^{v_i}, g) &= e(g^{q_i(\tau)},g^{\tau -i})\Leftrightarrow}\\
+    %\onslide<8->{e(g^{\phi(\tau) - v_i}, g) &= e(g,g)^{q_i(\tau)(\tau -i)}\Leftrightarrow}\\
+    \onslide<8->{\phi(\tau) - v_i &= q_i(\tau)(\tau -i)}
+    \end{align}
+    %\pause[10]
+    %\textbf{Note:} Verifier needs a \textit{verification key} \vrk consisting of $g^{\tau}$!
 \end{frame}

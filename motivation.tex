@@ -1,40 +1,71 @@
+\pdfslides{1}{3}{animations/stateless-validation}{width=\textwidth,trim=0 270 0 0, clip}{
+    Motivation
+}{%
+    Miners rely on \alert{state} to validate transactions and blocks.
+}{%
+    \vspace{6.45em}
+}
+
+\pdfslides{3}{3}{animations/stateless-validation}{width=\textwidth,trim=0 270 0 0, clip}{%
+    Motivation
+}{%
+    Miners rely on \alert{state} to validate transactions and blocks.
+}{%
+\begin{columns}
+    \begin{column}[t]{0.5\textwidth}
+        \alert{Validation state} can be \textbf{very large}:\pause
+        \begin{itemize}
+            \item Hundreds of GBs in Ethereum\pause
+            \item GBs in Bitcoin\pause
+        \end{itemize}
+    \end{column}
+    \begin{column}[t]{0.5\textwidth}
+        This poses scalability challenges:\pause
+        \begin{itemize}
+            \item Consensus via sharding\pause
+            \item Barrier to entry for P2P nodes\pause
+            \item DoS attacks
+        \end{itemize}
+    \end{column}
+\end{columns}
+}
+
+\pdfslides{3}{11}{animations/stateless-validation}{width=\textwidth,trim=0 100 0 0, clip}{%
+    Previous Work Outsources State via \textit{Authenticated Data Structures}
+}{%
+    \vspace{1em}
+    ~\cite{CPZ18} proposed stateless validation using \alert{Vector Commitments (VCs)!}
+    \vspace{.43em}
+}{%
+    %\vspace{6.45em}
+}
+
 \begin{frame}
-    \frametitle{Stateless Cryptocurrencies}
+    \frametitle{Requirements of VC Scheme for Stateless Validation}
 
-     \begin{exampleblock}{Theorem~\cite{CPZ18}}
-     \textit{Vector commitment (VC)} $\Rightarrow$ \textit{``stateless,'' payment-only, cryptocurrency}.\\
-     \pause
-     i.e., miners can validate and propose blocks with \textbf{only} $O(1)$ storage.
-     \end{exampleblock}
-     \pause
-     \alert{\textbf{Why go stateless?}}\pause
-     \begin{enumerate}
-         \item Potentially faster validation, especially for smart contracts\pause
-         \item Lower barrier to entry for both miners and P2P nodes\pause
-         \item Faster sharding
-     \end{enumerate}
-\end{frame}
-
-\begin{frame}
-    \frametitle{VC API for Stateless Cryptocurrencies}
-
-    Let $\vect{v}=[v_0, v_1, \dots, v_{n-1}]$ be a vector of size $n$.\pause
-
+    \pause
     \begin{itemize}
-        \item $\vrk,\prk,(\upk_i)_{i\in[0,n)},\alert{\pi^*}, d^* \leftarrow \vcsetup(1^\lambda, n)$\pause
+        \item \alert{Updatable} proofs and digest after change $(j,\delta_j)$\pause
         \begin{itemize}
-            \item \vrk is a \textit{small} global \alert{verification key}\pause
-            \item \prk is an $O(n)$-sized \alert{proving key}\pause
-            \item $\upk_i$ is a \textit{small} user-specific \alert{update key}\pause
-            \item $\alert{\pi^*}$ is a \textit{small} proof w.r.t. $d^*$ that $v_i$ is 0, for any position $i$\pause
+            %\item $d=\vccommit((v_i)_{i\in [0,n-1)})$\pause
+            %
+            %\item $d'=\vccommupdate(d, \delta_i, i)$\pause
+            %
+            %\item $\alert{\pi_i'} = \vcproofupdate(\alert{\pi_i}, \delta_j, j)$\pause
+            \item Only require a \textit{static} \textbf{update key} $\upk_j$\pause
+            \item Some schemes require \textit{dynamic} \textbf{update hints}, e.g., the proof $\pi_j$\pause
+            \item \textit{Problematic:} User $i$ must include not just $\pi_i$ in the TXN, but also $\pi_j$\pause
         \end{itemize}
-        \item $\{T,F\}\leftarrow \vcverifypos(\vrk, d, v_i, i, \alert{\pi_i})$\pause
-        \item $d'=\vccommupdate(d, \delta_i, i, \upk_i)$\pause
-        \item $\alert{\pi_i'} = \vcproofupdate(\alert{\pi_i}, \delta_j, j, \upk_j)$\pause
-        \item $\alert{\pi_I} = \vcaggregateproofs(I, (\pi_i)_{i\in I})$\pause
+        %
+        %\item $\alert{\pi_I} = \vcaggregateproofs(I, (\alert{\pi_i})_{i\in I})$\pause
+        %\item $\{T,F\}\leftarrow \vcverifypos(d, (v_i)_{i\in I} I, \alert{\pi_I})$\pause
+        \item \alert{Aggregate} many proofs $(\pi_i)_{i\in I}$ into one small \textbf{subvector proof} $\pi_I$\pause
+        %
+        %\item $(\alert{\pi_i})_{i\in[0,n)} \leftarrow \vcopenall(\vect{v})$\pause
+        \item \alert{Pre-compute} all $n$ proofs fast!\pause
         \begin{itemize}
-            \item $\{T,F\}\leftarrow \vcverifypos(\vrk, d, (v_i)_{i\in I}, I, \alert{\pi_I})$\pause
+            \item Useful for \textit{proof-serving nodes}.\pause
         \end{itemize}
-        \item $(\alert{\pi_i})_{i\in[0,n)} \leftarrow \vcopenall(\prk, \vect{v})$\pause
-    \end{itemize}
+        \item \alert{Concrete efficiency!}%\pause
+        \end{itemize}
 \end{frame}

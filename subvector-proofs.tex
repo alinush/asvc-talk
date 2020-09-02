@@ -1,49 +1,14 @@
 \begin{frame}
-    \frametitle{Computing $I$-subvector Proofs From Scratch}
+    \frametitle{Aggregating Proofs}
+    \pause
+    Given many $(\pi_i)_{i \in I}$, can aggregate into succinct \textbf{subvector proof} $\pi_I$.\pause
 
-    \footnotesize
-    \pause
-    Can use \alert{KZG batch proofs} to compute a constant-sized \alert{$I$-subvector} proof $\pi_I$ for all $(v_i)_{i\in I}$:\pause
-    \begin{align}
-    \onslide<3->{A_I(X) &=\prod_{i\in I} (X - i)}\\
-    \onslide<4->{R_I(X) &=\sum_{i\in I} v_i\cdot \lagr_i^*(X),\ \text{where}\  \lagr_i^*(X)=\prod_{j\in I,j\ne i}\frac{X - j}{i - j}}\\
-    \onslide<5->{q_I(X) &= \frac{\phi(X)-R_I(X)}{A_I(X)}}
-    \end{align}
-    \pause[6]
-%    \begin{alertblock}{Note that}
-%    \pause
-%    $A_I(i)=0$ and $R_I(i) = v_i$, $\forall i\in I$.\pause\\
-%    Can compute $A_I(X)$ and $R_I(X)$ in $O(|I|\log^2{|I|})$ field operations.\pause\\
-%    Can compute $q_I(X)$ in $O(n\log{n})$ field operations.\pause
-%    \end{alertblock}
-    $I$-subvector proof is $\pi_I = g^{q_I(\tau)}$.\pause\xspace
-    To verify:\pause
-    \begin{align}
-    e(c/g^{R_I(\tau)}, g) = e(\pi_I, g^{A_I(\tau)})
-    \end{align}
-    \pause
-    \textit{Note:} \vrk contains $(g^{\tau^i})_{i\in[0,|I|]}$ %, which are needed for verifier to commit to $A_I(X)$ and $R_I(X)$.
-\end{frame}
-
-\begin{frame}
-    \frametitle{Aggregating $I$-subvector Proof $\pi_I$ From $(\pi_i)_{i\in I}$}
-
-    \footnotesize
-    \pause
-    We use \textit{partial fraction decomposition}, as proposed by Drake and Buterin~\cite{Buterin20UsingPoly} (see \cref{s:partial-fraction-decomposition}):\pause
-    \begin{align}
-    \frac{1}{A_I(X)} = \frac{1}{\prod_{i\in I} (X-i)} = \sum_{i\in I} \frac{1}{A_I'(i)} \cdot \frac{1}{X-i}
-    \end{align}
-    \pause
-    We ``decompose'' the quotient $q_I(X)=\frac{\phi(X)-R_I(X)}{A_I(X)}$ in $\pi_I$ as:\pause % a linear combination of the $q_i(X)$'s in the $\pi_i$'s:\pause
-    \begin{align}
-    \onslide<5->{q_I(X) &= \phi(X)\frac{1}{A_I(X)}- R_I(X)\frac{1}{A_I(X)}}\\
-    \onslide<6->{    &= \phi(X)\frac{1}{A_I(X)}- \left(\sum_{i\in I} v_i\cdot \lagr_i^*(X)\right)\frac{1}{A_I(X)}}\\
-    \onslide<7->{    &= \phi(X)\sum_{i\in I} \frac{1}{A_I’(i)(X-i)} - \left(\sum_{i\in I} v_i\cdot \frac{A_I(X)}{A_I’(i)(X-i)}\right)\cdot \frac{1}{A_I(X)}} \\
-    \onslide<8->{    &= \sum_{i\in I} \frac{\phi(X)}{A_I’(i)(X-i)} - \sum_{i\in I} \frac{v_i}{A_I’(i)(X-i)}}\\
-    \onslide<9->{    &= \sum_{i\in I} \frac{1}{A_I’(i)}\cdot \frac{\phi(X) - v_i}{X-i}}
-    \onslide<10->{   = \sum_{i\in I} \frac{1}{A_I’(i)}\cdot q_i(X)}
-    \end{align}
-    \pause[11]
-    \textbf{Job done:} Can aggregate $\pi_i$'s for $(v_i)_{i\in I}$ into constant-sized $\pi_I=\prod_{i\in I} \pi_i^{1/A_I'(i)}$.
+    \textbf{High-level ideas}, thanks to Drake and Buterin:\pause
+    \begin{itemize}
+        \item Each $\pi_i$ is a commitment to quotient $q_i$ of division $\frac{\phi(X)}{X-i}$\pause
+        \item $\pi_I$ is a commitment to quotient $q_I$ of division $\frac{\phi(X)}{\prod_{i\in I} (X-i)}$ (see ~\cite{KZG10a})\pause
+        \item Compute $c_i$'s such that $\frac{1}{\prod_{i\in I}(X-i)} = \sum_{i\in I} c_i \frac{1}{X-i}$\pause
+        \item Then, $q_I(X) = \sum_{i\in I} c_i \cdot q_i(X)$\pause
+        \item Thus, $\pi_I = \prod_{i\in I} \pi_i^{c_i}$
+    \end{itemize}
 \end{frame}

@@ -3,45 +3,43 @@
 
     \small
     \pause
-    \textbf{Main contributions:}\pause
+    \textbf{Main contribution:} \alert{Concretely-efficient} aSVC from KZG polynomial commitments\pause
     \begin{itemize}
-        \item New aSVC with constant-sized (subvector) proofs and constant-sized update keys\pause
-        \item Proofs can be aggregated efficiently into subvector proof\pause
-        \item Proofs can be updated efficiently\pause
-        \item Can be used to build highly-efficient, account-based stateless cryptocurrencies\pause
+        \item Constant-sized, aggregatable and updatable proofs\pause
+        \item Constant-sized update keys\pause
+        \item Quasilinear-time proof pre-computation, via Feist-Khovratovich (FK) technique~\cite{FK20}\pause
     \end{itemize}
 
-    \textbf{Other goodies (not in this talk):}\pause
+    \textbf{Other contributions (not in this talk):}\pause
     \begin{itemize}
-        \item aSVC formalization that accounts for update keys\pause
-        \item Each update key $\upk_i$ is verifiable against $\vrk$\pause
-        \item New security definition for KZG batch proofs, which reduces to $n$-SBDH\pause
+        %\item aSVC formalization that accounts for update keys\pause
+        \item New security definition for KZG batch proofs, proven secure under $n$-SBDH\pause
+        \item Derive all $\upk_i$'s from $g^{\tau^i}$'s fast\pause
+        \begin{itemize}
+            \item Keeps trusted setup simple\pause
+            \item Keeps public parameters \textit{updatable}\pause
+        \end{itemize}
         \item Subtleties of VC-based stateless cryptocurrencies\pause
-        \item Aggregating multiple $I$-subvector proofs \textit{across different commitments}~\cite{GRWZ20}.
+        \begin{itemize}
+            \item Keeping track of transaction counters\pause
+            \item Verifiable update keys\pause
+            \item DoS attacks on new user registration
+        \end{itemize}
     \end{itemize}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Roots of Unity Benefits}
-
-    Our scheme actually uses $\phi(\omega_i)=v_i$, where $\omega$ is a primitive $n$th \alert{root of unity}.\pause\xspace
-    This has several advantages:\pause
-
-    \begin{itemize}
-    \item Our public parameters can be \textit{efficiently} derived from ``powers-of-tau'' $g^{\tau^i}$'s:\pause
-    \begin{itemize}
-        \item $\ell_i$'s via an inverse FFT~\cite{Virza17}\pause
-        \item $a_i$'s via the Feist-Khovratovich (FK) technique~\cite{FK20}\pause
-        \item $u_i$'s via \mygreen{our new, FK-like, technique} (see \cite[Sec 3.4.5]{TAB+20})\pause
-    \end{itemize}
-    \item Since $g^{\tau^i}$'s are updatable, our public parameters are \textit{updatable}.\pause
-    \item Can precompute all $n$ proofs in $O(n\log{n})$ time via FK technique~\cite{FK20}.\pause
-    \item Can remove $A'(i)$ from $\upk_i$.
-    \end{itemize}
-\end{frame}
+% TODO: I forgot future work slide!
 
 {\setbeamercolor{palette primary}{fg=black, bg=yellow}
     \begin{frame}[standout]
-        Questions?
+        Thank you!\\
+        \vspace{2em}
+        \small
+        {\normalfont Paper is too long?}
+        Read our blogpost!\\
+        \vspace{1em}
+        \footnotesize
+        \normalfont
+        \href{https://alinush.github.io/2020/05/06/aggregatable-subvector-commitments-for-stateless-cryptocurrencies.html}{https://alinush.github.io/2020/05/06/aggregatable-subvector-commitments-for-stateless-cryptocurrencies.html}
     \end{frame}
 }
