@@ -1,4 +1,4 @@
-\pdfslides{1}{3}{animations/stateless-validation}{width=\textwidth,trim=0 270 0 0, clip}{
+\pdfslides{1}{3}{animations/stateless-validation-5min}{width=\textwidth,trim=0 270 0 0, clip}{
     Motivation
 }{%
     Miners rely on \alert{state} to validate transactions and blocks.
@@ -6,7 +6,7 @@
     \vspace{6.45em}
 }
 
-\pdfslides{3}{3}{animations/stateless-validation}{width=\textwidth,trim=0 270 0 0, clip}{%
+\pdfslides{3}{3}{animations/stateless-validation-5min}{width=\textwidth,trim=0 270 0 0, clip}{%
     Motivation
 }{%
     Miners rely on \alert{state} to validate transactions and blocks.
@@ -30,42 +30,12 @@
 \end{columns}
 }
 
-\pdfslides{3}{11}{animations/stateless-validation}{width=\textwidth,trim=0 100 0 0, clip}{%
-    Previous Work Outsources State via \textit{Authenticated Data Structures}
+\pdfslides{3}{8}{animations/stateless-validation-5min}{width=\textwidth,trim=0 100 0 0, clip}{%
+    Previous Work Outsources State via \textit{Vector Commitments (VCs)}
 }{%
     \vspace{1em}
-    ~\cite{CPZ18} proposed stateless validation using \alert{Vector Commitments (VCs)!}
+    ~\cite{CPZ18} was first to proposed stateless validation using VCs!
     \vspace{.43em}
 }{%
     %\vspace{6.45em}
 }
-
-\begin{frame}
-    \frametitle{Requirements of VC Scheme for Stateless Validation}
-
-    \pause
-    \begin{itemize}
-        \item \alert{Updatable} proofs and digest after change $(j,\delta_j)$\pause
-        \begin{itemize}
-            %\item $d=\vccommit((v_i)_{i\in [0,n-1)})$\pause
-            %
-            %\item $d'=\vccommupdate(d, \delta_i, i)$\pause
-            %
-            %\item $\alert{\pi_i'} = \vcproofupdate(\alert{\pi_i}, \delta_j, j)$\pause
-            \item Only require a \textit{static} \textbf{update key} $\upk_j$\pause
-            \item Some schemes require \textit{dynamic} \textbf{update hints}, e.g., the proof $\pi_j$\pause
-            \item \textit{Problematic:} User $i$ must include not just $\pi_i$ in the TXN, but also $\pi_j$\pause
-        \end{itemize}
-        %
-        %\item $\alert{\pi_I} = \vcaggregateproofs(I, (\alert{\pi_i})_{i\in I})$\pause
-        %\item $\{T,F\}\leftarrow \vcverifypos(d, (v_i)_{i\in I} I, \alert{\pi_I})$\pause
-        \item \alert{Aggregate} many proofs $(\pi_i)_{i\in I}$ into one small \textbf{subvector proof} $\pi_I$\pause
-        %
-        %\item $(\alert{\pi_i})_{i\in[0,n)} \leftarrow \vcopenall(\vect{v})$\pause
-        \item \alert{Pre-compute} all $n$ proofs fast!\pause
-        \begin{itemize}
-            \item Useful for \textit{proof-serving nodes}.\pause
-        \end{itemize}
-        \item \alert{Concrete efficiency!}%\pause
-        \end{itemize}
-\end{frame}

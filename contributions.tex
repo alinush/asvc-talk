@@ -1,54 +1,46 @@
-\newcommand{\blgsb}{\ensuremath{b\lg^2{b}}}
-\newcommand{\lr}{\ensuremath{\myred{\log{n}}}}
-\newcommand{\nop}{\myred{\large $\times$}}
-\newcommand{\chk}{\mygreen{\ding{52}}}
-\newcommand{\ns}{\ensuremath{\myred{n^2}}}
-\newcommand{\rn}{\ensuremath{\myred{n}}}
-\newcommand{\Gh}{\ensuremath{\myred{\Gr_?}}}
-
 \begin{frame}
-    \frametitle{Our Contribution: Aggregatable Subvector Commitments (aSVCs)}
+    \frametitle{Our contributions: \alert{Efficient} VC from KZG polynomial commitments~\cite{KZG10a}}
 
-    \begin{table}
-    \footnotesize
+    \small
     \pause
-    \caption{\footnotesize Asymptotic comparison to previous (aS)VCs. $n$ is the size of the vector $\vect{v}$.}
-    \begin{tabular}{lccccccccccccc}
-        \toprule
-        {\makecell{(aS)VC scheme}}
-        & \makecell{Public\\parameters}
-        & \makecell{Proof\\size} % updating proof typically takes O(|proof-size|) time, but some schemes don't support its
-        & \makecell{Update\\key size}
-        & \makecell{Digest\\update}
-        & \makecell{Aggr. $b$\\proofs}
-        & \makecell{Prove\\all}\pause\\
-        \midrule
-        Merkle trees~\cite{Merkle87}  & 1   & \lr       & \nop      & \nop & \nop      & $n$\\
-        \midrule\pause
-        %KZG~\cite{KZG10a}             & \rn & 1         & \nop      & \chk & \nop      & \ns \\
-        CDHK~\cite{CDHK15}            & \rn & 1         & \rn       & \chk & \nop      & \ns \\
-        CPZ~\cite{CPZ18}              & \rn & \lr       & \lr       & \chk & \nop      & $n\log{n}$ \\
-        TCZ~\cite{TCZ+20,Tomescu20}   & \rn & \lr       & \lr       & \chk & \nop      & $n\log{n}$ \\
-        Pointproofs~\cite{GRWZ20}     & \rn & 1         & \rn       & \chk & $b_{\Gr}$ & \ns\\
-        \midrule\pause
-        % \Gh denote group operations
-        BBF~\cite{BBF19}                & 1   & $1_{\Gh}$ & \nop        & \nop & $b\log{n}_{\Gh}$        & $n\log{n}_{\Gh}$\\
-        CFG$_1$~\cite{CFG+20}           & 1   & $1_{\Gh}$ & \nop        & \nop & $b\log{b}\log{n}_{\Gh}$ & $n\log^2{n}_{\Gh}$\pause\\
-        %CF/LM~\cite{CF13,LM19}          & 1   & $1_{\Gh}$ & $\rn_{\Gh}$ & \chk & \nop                    & $\ns_{\Gh}$ \pause\\
-        CFG$_2$~\cite{CF13,LM19,CFG+20} & 1   & $1_{\Gh}$ & $1_{\Gh}$   & \chk & $b\log^2{b}_{\Gh}$      & $n\log^2{n}_{\Gh}$\\
-        \midrule\pause
-        \textbf{Our aSVC}               & \rn & 1   & 1    & \chk & \blgsb$_{\F} + b_{\Gr}$ & $n\log{n}$ \\
-        \bottomrule
-    \end{tabular}
-    \end{table}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Some limitations}
-    Unlike schemes based on hidden-order groups~\cite{CF13,LM19,BBF19,CFG+20}, we have:\pause
     \begin{itemize}
-        \item Trusted setup\pause
-        \item No \textit{incremental} aggregation \& no dis-aggregation~\cite{CFG+20}\pause
-        \item No space-time trade-off for proof pre-computation~\cite{BBF19,CFG+20}
+        \item Constant-sized, aggregatable and updatable proofs\pause
+        \item Constant-sized \alert{update keys}\pause
+        \item Quasilinear-time proof pre-computation, via Feist-Khovratovich (FK) technique~\cite{FK20}\pause
+        \item \textbf{Previous work} is either: non-aggregatable\pause, or has linear-sized update keys\pause, or is based on less efficient, hidden-order groups\pause
+    \end{itemize}
+
+    \textbf{Additionally,}\pause
+    \begin{itemize}
+        %\item aSVC formalization that accounts for update keys\pause
+        \item New security definition for KZG batch proofs, proven secure under $n$-SBDH\pause
+        \item \textit{Publicly-derivable} parameters from ``powers-of-tau`` parameters\pause
+        \begin{itemize}
+            \item Keeps trusted setup simple\pause
+            \item Keeps parameters \textit{updatable}\pause
+        \end{itemize}
+        \item Subtleties of VC-based stateless cryptocurrencies\pause
+        \begin{itemize}
+            \item Keeping track of transaction counters\pause
+            \item Verifiable update keys\pause
+            \item DoS attacks on new user registration
+        \end{itemize}
     \end{itemize}
 \end{frame}
+
+%
+% The end!
+%
+{\setbeamercolor{palette primary}{fg=black, bg=yellow}
+    \begin{frame}[standout]
+        Thank you!\\
+        \vspace{2em}
+        \small
+        {\normalfont Paper is too long?}
+        Read our blogpost!\\
+        \vspace{1em}
+        \footnotesize
+        \normalfont
+        \href{https://alinush.github.io/2020/05/06/aggregatable-subvector-commitments-for-stateless-cryptocurrencies.html}{https://alinush.github.io/2020/05/06/aggregatable-subvector-commitments-for-stateless-cryptocurrencies.html}
+    \end{frame}
+}

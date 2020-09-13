@@ -42,15 +42,6 @@
 {Aggregatable Subvector Commitments for Stateless Cryptocurrencies}
 %\subtitle{From Commitments to Lagrange Polynomials}
 
-%\author[Tomescu, Abraham, Buterin, Drake, Feist, Khovratovich]{%
-%\makecell{Alin Tomescu\inst{1}\\\href{https://twitter.com/alinush407}{\textcolor{TolDarkBlue}{@alinush407}}} &
-%\makecell{Ittai Abraham\inst{1}\\\href{https://twitter.com/ittaia}{\textcolor{TolDarkBlue}{@ittaia}}} &
-%\makecell{Vitalik Buterin\inst{2}\\\href{https://twitter.com/VitalikButerin}{\textcolor{TolDarkBlue}{@VitalikButerin}}}\\
-%\makecell{Justin Drake\inst{2}\\\href{https://twitter.com/drakefjustin}{\textcolor{TolDarkBlue}{@drakefjustin}}} &
-%\makecell{Dankrad Feist\inst{2}\\\href{https://twitter.com/dankrad}{\textcolor{TolDarkBlue}{@dankrad}}} &
-%\makecell{Dmitry Khovratovich\inst{2}\\\href{https://twitter.com/Khovr}{\textcolor{TolDarkBlue}{@Khovr}}}
-%}
-
 % To better align author names using a \begin{tabular}{ccc}
 \makeatletter
 \long\def\beamer@author[#1]#2{%
@@ -128,11 +119,11 @@
   \begin{frame}
     \frametitle{Outline}
     \tableofcontents[
-    	%currentsection,
-    	%currentsubsection,
- 	    sectionstyle=show/shaded,
-    	subsectionstyle=show/shaded/hide
-    	%subsectionstyle=show/show/hide
+        %sectionstyle=show/shaded,
+        %subsectionstyle=show/show/shaded,
+        %subsubsectionstyle=show/show/show/show
+    	currentsection,
+        currentsubsection,
     ]
   \end{frame}
 }
@@ -148,23 +139,21 @@
 %\end{frame}
 %---------------------------------------------------------
 \input{defs}
-%\section{Motivation}
+%---------------------------------------------------------
 \input{motivation}
-%\section{Contributions}
 \input{contributions}
-\section{Background}
-\input{commitment}
-\section{Our Techniques}
-\subsection{Updating Proofs}
-\input{proofs}
-\subsection{Aggregating Proofs into Subvector Proofs}
-\input{subvector-proofs}
-\section{Conclusion}
-\input{conclusion}
 %---------------------------------------------------------
 \appendix
-%\section{Appendix} % both section and section* error with "<recently read> \calc@denominator"
-\input{appendix}
+\section{Appendix} % both section and section* error with "<recently read> \calc@denominator"
+\subsection{Previous Work}
+\input{previous-work}
+\subsection{Background}
+\input{commitment}
+\subsection{Our Techniques}
+\input{proofs}
+\input{subvector-proofs}
+\subsection{Extras}
+%\input{appendix}
 %---------------------------------------------------------
 \begin{frame}[allowframebreaks]
     \frametitle{References}
